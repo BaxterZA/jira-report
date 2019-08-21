@@ -1,0 +1,4 @@
+body .time-report-report-thumbnail:before {
+    background-image: url(images/report-thumbnail.png);
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="time_report"/>
+    <!-- add our web resources -->
+    <web-resource key="time_report-resources" name="time_report Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <resource type="download" name="time_report.css" location="/css/time_report.css"/>
+        <resource type="download" name="time_report.js" location="/js/time_report.js"/>
+        <resource type="download" name="images/" location="/images"/>
+        <context>time_report</context>
+        <context>com.atlassian.jira.project.reports.page</context>
+    </web-resource>
+    <report name="Time Report" i18n-name-key="time-report.name" key="time-report"
+            class="com.appodeal.time_report.TimeReport">
+        <description key="time-report.description">The Time Report Plugin</description>
+        <resource name="view" type="velocity" location="/templates/reports/time-report/view.vm"/>
+        <resource name="i18n" type="i18n" location="TimeReport"/>
+        <label key="time-report.label"></label>
+        <thumbnail cssClass="time-report-report-thumbnail"/>
+        <properties>
+            <property>
+                <key>startDate</key>
+                <name>time-report.from</name>
+                <type>date</type>
+            </property>
+            <property>
+                <key>endDate</key>
+                <name>time-report.to</name>
+                <type>date</type>
+            </property>
+            <property>
+                <key>component</key>
+                <name>time-report.components</name>
+                <description>time-report.components.description</description>
+                <type>multiselect</type>
+                <values class="com.appodeal.time_report.FilterComponentValuesGenerator"/>
+            </property>
+            <property>
+                <key>useful</key>
+                <name>time-report.useful.statuses</name>
+                <description>time-report.useful.statuses.description</description>
+                <type>multiselect</type>
+                <values class="com.appodeal.time_report.FilterStatusValuesGenerator"/>
+            </property>
+            <property>
+                <key>working</key>
+                <name>time-report.working.statuses</name>
+                <description>time-report.working.statuses.description</description>
+                <type>multiselect</type>
+                <values class="com.appodeal.time_report.FilterStatusValuesGenerator"/>
+            </property>
+        </properties>
+    </report>
+</atlassian-plugin>

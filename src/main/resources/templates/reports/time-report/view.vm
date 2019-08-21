@@ -1,0 +1,64 @@
+#enable_html_escaping()
+<table>
+    <tbody>
+        #foreach ($filter in $currentFilter.entrySet())
+        <tr>
+            <td><b>${filter.key}</b></td>
+            <td>${filter.value}</td>
+        </tr>
+        #end
+    </tbody>
+</table>
+<table width="100%" class="aui">
+    <tbody>
+    <tr>
+        <th colspan="2" rowspan="2">Issue</th>
+        <th rowspan="2">Components</th>
+        <th rowspan="2">Estimate</th>
+        <th colspan="2">Spent time</th>
+        <th colspan="2">Useful time</th>
+        <th colspan="2">Lead time</th>
+        <th rowspan="2">Effectiveness</th>
+    </tr>
+    <tr>
+        <th>value</th>
+        <th>accuracy</th>
+        <th>value</th>
+        <th>accuracy</th>
+        <th>value</th>
+        <th>accuracy</th>
+    </tr>
+        #foreach ($issue in $issues)
+        <tr>
+            <td class="nowrap" style="border-left-width: 0;">
+                #if ($doNotPrintAggregates)
+                    <img src="$req.contextPath/images/icons/link_out_bot.gif" width="16" height="16" border="0"
+                         align="absmiddle" alt="">
+                #end
+                #set ($type = $issue.getIssueType())
+                #displayConstantIcon($type)
+            </td>
+            <td><a href="$req.contextPath/browse/${issue.getKey()}">${issue.getKey()} ${issue.getSummary()}</a></td>
+            <td>${issue.getComponentNames()}</td>
+            <td>${issue.getEstimate()}</td>
+            <td>${issue.getSpent()}</td>
+            <td>${issue.getSpentAccuracyString()}</td>
+            <td>${issue.getUsefulTime()}</td>
+            <td>${issue.getUsefulTimeAccuracyString()}</td>
+            <td>${issue.getLeadTime()}</td>
+            <td>${issue.getLeadTimeAccuracyString()}</td>
+            <td>${issue.getEffectivenessString()}</td>
+        </tr>
+        #end
+    <tr>
+        <td colspan="4" style="text-align: end"><b>Median values</b></td>
+        <td></td>
+        <td><b>${spentAccuracyMedian}</b></td>
+        <td></td>
+        <td><b>${usefulTimeAccuracyMedian}</b></td>
+        <td></td>
+        <td><b>${leadTimeAccuracyMedian}</b></td>
+        <td><b>${effectivenessMedian}</b></td>
+    </tr>
+    </tbody>
+</table>
